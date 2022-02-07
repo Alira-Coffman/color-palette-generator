@@ -1,13 +1,16 @@
 import styles from './ColorCard.module.css'
-
-export default function ColorCard() {
-    var letters = '0123456789ABCDEF';
-    var color = '#';
-    for (var i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
+import Image from 'next/image'
+export default function ColorCard({color, locked}) {
+   
     return (
         <div className="card m-4 p-2">
+            <div className="d-flex justify-content-end p-2">
+                <Image
+                src={locked ? "/../public/lock-fill.svg" : "/../public/unlock.svg" } 
+                width={20}
+                height={20}
+                alt="save color" />
+            </div>
             <style jsx>{`
                 .cardBgColor {
                 background: ${color};

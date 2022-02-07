@@ -5,6 +5,15 @@ import ColorCard from '../components/ColorCard/ColorCard';
 function refreshPage() {
     window.location.reload(false);
   }
+function generateColor()
+{
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
 
 export default function Generate() {
     return (
@@ -17,11 +26,11 @@ export default function Generate() {
 
       <main className={styles.main}>
           <div className="d-flex justify-content-between">
-          <ColorCard/>
-        <ColorCard/>
-        <ColorCard/>
-        <ColorCard/>
-        <ColorCard/>
+            <ColorCard locked={false} color={generateColor()}/>
+            <ColorCard locked={false} color={generateColor()}/>
+            <ColorCard locked={false} color={generateColor()}/>
+            <ColorCard locked={false} color={generateColor()}/>
+            <ColorCard locked={false} color={generateColor()}/>
           </div>
           <button onClick={refreshPage} className='btn btn-info'>Generate New Set</button>
       
