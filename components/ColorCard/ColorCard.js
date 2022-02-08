@@ -1,7 +1,9 @@
 import styles from './ColorCard.module.css'
 import Image from 'next/image'
-export default function ColorCard({color, locked}) {
-   
+import { useState } from 'react'
+
+export default function ColorCard({color , locked}) {
+  
     return (
         <div className="card m-4 p-2">
             <div className="d-flex justify-content-end p-2">
