@@ -6,30 +6,62 @@ import { useState } from 'react';
 const NUMBERCARDS = 5;
 
 
-function generateColor()
-{
-  var letters = '0123456789ABCDEF';
-  var color = '#';
-  let colors = [];
-  //TODO Change number of color cards to prop
-  for(let j = 0; j < NUMBERCARDS; j++)
-  {
-    for (var i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    colors.push(color);
-    color = '#';
-  }
-  console.log(colors)
-  return colors;
-  
-}
 
 export default function Generate() {
-  
+  const [locked, setLocked] = useState(generateLockCode());
   const [colors, setColors] = useState(generateColor()); 
-  
 
+  function generateLockCode()
+  {
+    if(locked == undefined)
+    {
+      let locked_l = [];
+      for(let i = 0; i < NUMBERCARDS; i++)
+        locked_l.push(false);
+      return locked_l;
+    }
+    else
+    {
+      return locked;
+    }
+ 
+  }
+  const updateLocked = itemNum => {
+    let newLock = locked;
+    console.log('clicky: ', newLock[itemNum])
+    newLock[itemNum] = !newLock[itemNum];
+    console.log(newLock[itemNum]);
+    setLocked(newLock);
+  }
+
+  function generateColor()
+  {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    let colors_l = [];
+    //TODO Change number of color cards to prop
+    for(let j = 0; j < NUMBERCARDS; j++)
+    {
+      
+      if(!locked[j])
+      {
+        console.log('you are unlocked')
+        for (var i = 0; i < 6; i++) {
+        
+          color += letters[Math.floor(Math.random() * 16)];
+        }
+        colors_l.push(color);
+        color = '#';
+      }
+      else
+      {
+        console.log('you are locked');
+        colors_l.push(colors[j]);
+      }
+      
+    }
+    return colors_l;
+  }
   function rotateColors() {
     // window.location.reload(false);
     setColors(generateColor());
@@ -45,14 +77,12 @@ export default function Generate() {
 
       <main className={styles.main}>
           <div className="d-flex justify-content-between">
-          {colors.map((item) =>{ 
-            return(<ColorCard locked={false} color={item}/>)
+          {colors.map((item,index) =>{ 
+            return(<ColorCard locked={locked[index]} color={item} cardNum={index} updateLock={updateLocked}/>)
           } )
         }
           </div>
           <button onClick={rotateColors} className='btn btn-info'>Generate New Set</button>
-      
-        
       </main>
         </div>
     )
